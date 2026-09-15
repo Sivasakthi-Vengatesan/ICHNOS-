@@ -1,0 +1,33 @@
+{
+  "pipeline_name": "orders_pipeline",
+  "version": "v2",
+  "description": "Optimized verified orders processing pipeline with tax calculation mapping.",
+  "schema": {
+    "id": "int",
+    "amount": "float",
+    "status": "string",
+    "region": "string"
+  },
+  "transformation_ir": [
+    {
+      "op": "FILTER",
+      "column": "status",
+      "operator": "==",
+      "value": "PAID",
+      "expression": "status == 'PAID'",
+      "node_name": "clean_orders"
+    },
+    {
+      "op": "MAP",
+      "column": "amount",
+      "expression": "amount * 1.0",
+      "node_name": "apply_tax"
+    },
+    {
+      "op": "AGGREGATE_SUM",
+      "column": "amount",
+      "node_name": "revenue_daily"
+    }
+  ],
+  "invariant": "ASSERT output.total_amount == input.total_amount - refunded.total_amount"
+}

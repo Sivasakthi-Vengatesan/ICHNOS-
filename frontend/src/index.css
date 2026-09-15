@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #F4F1E8;
+  --color-structural: #111111;
+  --color-surface: #FFFFFF;
+  --color-muted-paper: #E6E2D8;
+  --color-muted-text: #66635D;
+  --color-verified: #168A52;
+  --color-violated: #D02020;
+  --color-unknown: #D49A00;
+  --color-lineage: #2457C5;
+  --color-accent: #DDE51A;
+
+  --font-sans: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-display: "Space Grotesk", sans-serif;
+}
+
+:root {
+  --bg-paper: #F4F1E8;
+  --structural-black: #111111;
+  --surface-white: #FFFFFF;
+  --muted-paper: #E6E2D8;
+  --muted-text: #66635D;
+  --status-verified: #168A52;
+  --status-violated: #D02020;
+  --status-unknown: #D49A00;
+  --status-lineage: #2457C5;
+  --kinetic-yellow: #DDE51A;
+}
+
+* {
+  border-radius: 0px !important;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F4F1E8;
+  color: #111111;
+  background-image: 
+    linear-gradient(to right, rgba(17, 17, 17, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #E6E2D8;
+}
+::-webkit-scrollbar-thumb {
+  background: #111111;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #66635D;
+}
+
+/* Hard Offset Shadows for Bauhaus */
+.shadow-bauhaus {
+  box-shadow: 4px 4px 0px 0px #111111;
+}
+.shadow-bauhaus-sm {
+  box-shadow: 2px 2px 0px 0px #111111;
+}
+.shadow-bauhaus-lg {
+  box-shadow: 8px 8px 0px 0px #111111;
+}
+.shadow-bauhaus-red {
+  box-shadow: 4px 4px 0px 0px #D02020;
+}
+.shadow-bauhaus-green {
+  box-shadow: 4px 4px 0px 0px #168A52;
+}
+.shadow-bauhaus-yellow {
+  box-shadow: 4px 4px 0px 0px #DDE51A;
+}
+
+/* Mechanical Button Click Physics */
+.btn-bauhaus {
+  position: relative;
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-bauhaus:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px #111111 !important;
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite;
+}

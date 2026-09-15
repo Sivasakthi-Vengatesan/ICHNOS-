@@ -1,0 +1,27 @@
+{
+  "pipeline_name": "orders_pipeline",
+  "version": "v3",
+  "description": "Buggy orders pipeline with anomalous filter accidentally dropping order 2.",
+  "schema": {
+    "id": "int",
+    "amount": "float",
+    "status": "string",
+    "region": "string"
+  },
+  "transformation_ir": [
+    {
+      "op": "FILTER",
+      "column": "status",
+      "operator": "==",
+      "value": "PAID",
+      "expression": "status == 'PAID' and id != 2",
+      "node_name": "clean_orders"
+    },
+    {
+      "op": "AGGREGATE_SUM",
+      "column": "amount",
+      "node_name": "revenue_daily"
+    }
+  ],
+  "invariant": "ASSERT output.total_amount == input.total_amount - refunded.total_amount"
+}

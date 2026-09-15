@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+backend/__pycache__/
+app/**/__pycache__/
+__pycache__/
+*.pyc
+*.pyo
+
+# Testing & Cache
+.pytest_cache/
+.coverage
+htmlcov/
+.tsbuildinfo
+node_modules/.tmp/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Local databases & logs
+*.db
+tracelake.db
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
