@@ -1,5 +1,10 @@
 # TraceLake-V
 
+[![GitHub Pages Deployment](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=flat-square&logo=github)](https://sivasakthi-vengatesan.github.io/tracelake-v/)
+[![Tests](https://img.shields.io/badge/Tests-15%20Passed-success?style=flat-square&logo=pytest)](https://github.com/Sivasakthi-Vengatesan/tracelake-v)
+[![SMT Solver](https://img.shields.io/badge/Solver-Z3%20Py%204.12-blue?style=flat-square)](https://github.com/Z3Prover/z3)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+
 ## SMT-Powered Data Lineage, Invariant Verification & Counterexample Engine
 
 ```
