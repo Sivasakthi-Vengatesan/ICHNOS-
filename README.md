@@ -1,180 +1,157 @@
 # TraceLake-V
 
-[![GitHub Pages Deployment](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=flat-square&logo=github)](https://sivasakthi-vengatesan.github.io/tracelake-v/)
-[![Tests](https://img.shields.io/badge/Tests-15%20Passed-success?style=flat-square&logo=pytest)](https://github.com/Sivasakthi-Vengatesan/tracelake-v)
-[![SMT Solver](https://img.shields.io/badge/Solver-Z3%20Py%204.12-blue?style=flat-square)](https://github.com/Z3Prover/z3)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+> **Lightweight Telemetry Visualizer, Distributed Trace Inspector, and Execution Lineage Platform.**
 
-## SMT-Powered Data Lineage, Invariant Verification & Counterexample Engine
-
-```
-TRACELAKE-V // SMT DATA LINEAGE & INVARIANT PROOF ENGINE
-========================================================
-[FORM FOLLOWS DATA. MOTION FOLLOWS EXECUTION.]
-```
-
-TraceLake-V is a developer-grade data pipeline verification and debugging platform that combines **data lineage**, **pipeline execution traces**, **schema tracking**, **declarative business invariants**, and **formal verification using the Z3 SMT solver**.
-
-Traditional data observability tools detect post-facto symptoms (e.g. "row count dropped 10%"). TraceLake-V answers:
-
-> **"Does this transformation logically preserve the invariant we declared?"**
-> **"If not, what concrete input state demonstrates the violation?"**
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.0+-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-5.0+-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS%203.0+-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-brightgreen?style=flat-square&logo=github)](https://sivasakthi-vengatesan.github.io/tracelake-v/)
 
 ---
 
-## Architecture
+## The Problem
 
-```text
-                   TraceLake-V
-                       │
-              ┌────────▼────────┐
-              │ Pipeline Source │ (Kafka / CSV / Spark)
-              └────────┬────────┘
-                       ↓
-              ┌─────────────────┐
-              │ Execution Trace │ (Real row counts & wall time)
-              └────────┬────────┘
-                       ↓
-              ┌─────────────────┐
-              │ Lineage Engine  │ (Table & Column DAG)
-              └────────┬────────┘
-                       ↓
-              ┌─────────────────┐
-              │ Invariant DSL   │ (ASSERT output.total == input.total - refunded.total)
-              └────────┬────────┘
-                       ↓
-              ┌─────────────────┐
-              │ SMT Compiler    │ (QF_LIRA symbolic encoder)
-              └────────┬────────┘
-                       ↓
-                  ┌─────────┐
-                  │   Z3    │
-                  └────┬────┘
-                       │
-              ┌────────┴────────┐
-              ↓                 ↓
-           UNSAT               SAT
-              ↓                 ↓
-      FORMALLY VERIFIED   COUNTEREXAMPLE REPORT
-                                ↓
-                         Root Cause Analysis
-                                ↓
-                         Version Time-Travel Diff
+Traditional linear log streams fail when debugging modern asynchronous data flows, distributed jobs, and multi-stage event pipelines—isolated log lines cannot convey causal dependencies, parent-child span hierarchy, or cumulative latency across service boundaries. TraceLake-V bridges this observability gap by transforming raw execution traces and transformation events into interactive dependency DAGs, waterfall timelines, and actionable bottleneck diagnostics.
+
+---
+
+## Key Features
+
+- **Interactive Trace Waterfall & Execution DAG**: Visualize complex parent-child span relationships, critical path bottlenecks, and stage-by-stage execution timelines with sub-millisecond precision.
+- **Deep Span & Metadata Inspection**: Drill down into individual spans to inspect execution duration, error stacks, input/output payload schemas, HTTP status codes, and attribute key-value pairs.
+- **Multi-Level Lineage & Root-Cause Isolation**: Track table and column-level data transformations across pipeline versions, identifying the exact code commit or step that introduced downstream data anomalies.
+- **Real-Time Telemetry Filtering & Search**: Instant query engine to filter spans by service name, execution status (`OK`, `ERROR`, `VIOLATED`), latency thresholds ($p50, p95, p99$), and custom metadata tags.
+- **Decoupled, Modular Architecture**: Type-safe TypeScript frontend paired with a modular ingestion parser that easily integrates with standard telemetry formats and backend sinks.
+
+---
+
+## Architecture & Data Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             TRACELAKE-V PIPELINE                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   [ Data Sources / Jobs ]                                                   │
+│   (Kafka, Spark, Async Workers, REST APIs)                                  │
+│             │                                                               │
+│             ▼ (JSON Traces / OTLP Payloads)                                 │
+│   [ Telemetry Ingestion Layer ] (FastAPI / Static JSON Adapter)             │
+│             │                                                               │
+│             ▼ (Parsed Span Trees & DAG Relations)                           │
+│   [ TraceLake-V Core Engine ]                                               │
+│       ├── Trace Hierarchy Parser (Parent-Child Linking & Durations)         │
+│       ├── Lineage & Schema Resolver (Column-Level Dependency Map)           │
+│       └── Latency & Critical Path Analyzer                                  │
+│             │                                                               │
+│             ▼ (State-Driven Reactive Rendering)                             │
+│   [ Modern Developer UI ]                                                   │
+│       ├── Timeline / Waterfall View                                         │
+│       ├── Interactive Pipeline DAG Graph                                    │
+│       ├── Span Metadata & Counterexample Drawer                             │
+│       └── Time-Travel Version Comparison                                    │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Core Demo Pipeline Scenario
+## Quickstart & Local Setup
 
-### Ground Truth Input (`sample_orders.csv`):
-```text
-id | amount | status
-1  | 500    | PAID
-2  | 300    | PAID
-3  | 200    | REFUNDED
-```
+### Prerequisites
+- **Node.js**: v18.0.0 or higher
+- **Package Manager**: `npm`, `pnpm`, or `yarn`
+- **Python**: 3.10+ (optional, for running the local verification backend)
 
-### Invariant:
-```text
-ASSERT output.total_amount == input.total_amount - refunded.total_amount
-```
-- $\text{input\_total} = 1000$
-- $\text{refunded\_total} = 200$
-- $\text{expected\_output} = 800$
-
-### Version 1 (Correct):
-```python
-paid_orders = orders[orders["status"] == "PAID"]
-# Result: output_total = 800 -> Z3: UNSAT -> FORMALLY VERIFIED ✓
-```
-
-### Version 3 (Deliberately Broken):
-```python
-paid_orders = orders[(orders["status"] == "PAID") & (orders["id"] != 2)]
-# Result: output_total = 500 -> Z3: SAT -> FORMALLY VIOLATED ✗
-# Counterexample extracted: Order ID 2 ($300, PAID) was dropped by clean_orders
-```
-
----
-
-## CLI Usage
-
-The `tracelake` CLI tool provides full terminal verification:
-
+### 1. Clone the Repository
 ```bash
-# Verify a pipeline JSON definition with Z3
-python backend/cli.py verify examples/orders_pipeline_v1.json
-# Result: [PASS] FORMALLY VERIFIED (UNSAT in 68 ms)
-
-# Verify broken pipeline
-python backend/cli.py verify examples/orders_pipeline_v3_broken.json
-# Result: [FAIL] FORMALLY VIOLATED (SAT in 28 ms)
-# Extracts concrete counterexample with root cause
-
-# Inspect lineage graph
-python backend/cli.py lineage orders_pipeline --version v3
-
-# Compare versions with Git-like diff and regression alert
-python backend/cli.py compare orders_pipeline v2 v3
-
-# Execute pipeline against real dataset
-python backend/cli.py execute orders_pipeline --version v1
+git clone https://github.com/Sivasakthi-Vengatesan/tracelake-v.git
+cd tracelake-v
 ```
 
----
-
-## Running the Web Application (Bauhaus × Kinetic Instrument UI)
-
-The web dashboard is built according to the **Bauhaus × Kinetic Technical Instrument** design specification:
-- Background `#F4F1E8` (warm technical paper)
-- Structural Black `#111111` borders (0px sharp corners)
-- Semantic state colors (Verified `#168A52`, Violated `#D02020`, Unknown `#D49A00`, Lineage `#2457C5`, Kinetic Acid Yellow `#DDE51A`)
-- Numbered navigation screens `01` to `07`.
-
-### 1. Start Backend:
+### 2. Frontend Setup & Development Server
 ```bash
-cd backend
-python -m uvicorn app.main:app --port 8000
-```
-
-### 2. Start Frontend:
-```bash
+# Navigate to the frontend workspace
 cd frontend
+
+# Install dependencies
 npm install
+
+# Start the Vite local development server
 npm run dev
 ```
 
-### 3. Or with Docker Compose:
+Open `http://localhost:5173` in your browser to view the interactive trace visualizer.
+
+### 3. (Optional) Run the FastAPI Backend & Verification Engine
 ```bash
-docker compose up
+# From project root
+cd backend
+python -m venv venv
+
+# Activate virtual environment
+# On Linux/macOS:
+source venv/bin/activate
+# On Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+
+# Install backend dependencies & start server
+pip install -r requirements.txt
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+### 4. Running with Docker Compose
+```bash
+docker compose up --build
+```
+- **TraceLake-V Frontend**: `http://localhost:3000`
+- **Backend API & Swagger Docs**: `http://localhost:8000/docs`
+
+---
+
+## Component Architecture
+
+```
+frontend/src/
+├── components/
+│   ├── ArchitectureView.tsx     # System pipeline & DAG layout renderer
+│   ├── BenchmarkView.tsx        # Latency breakdown & statistical metrics
+│   ├── EventExplorer.tsx        # Filterable span list and metadata inspector
+│   ├── LineageGraph.tsx         # Node-link multi-tier lineage visualization
+│   └── TimelineWaterfall.tsx    # Horizontal span execution waterfall
+├── hooks/
+│   ├── useTraceData.ts          # Telemetry state management & querying
+│   └── useFilterState.ts        # Attribute and latency search filter bindings
+└── types/
+    └── telemetry.ts             # TypeScript interfaces for Spans, Traces, DAG nodes
 ```
 
 ---
 
-## Numbered Screens
+## Roadmap & Upcoming Milestones
 
-- `01 / OVERVIEW`: System statistics, live telemetry marquee, active pipeline status.
-- `02 / PIPELINES`: Catalogue of registered pipelines, versions, and transformation IR.
-- `03 / EXECUTIONS`: Measured traces, step-by-step row count changes, and timings.
-- `04 / LINEAGE`: Multi-level DAG (Table & Column level), with root-cause highlighting.
-- `05 / VERIFICATION`: The centerpiece: Z3 UNSAT/SAT status, Invariant formula, Incident Counterexample Report, and Interactive SMT Sandbox.
-- `06 / INVARIANTS`: Declarative Invariant DSL editor, AST visualizer, and syntax validation.
-- `07 / TIME TRAVEL`: Version timeline (V1 -> V2 -> V3 -> V4), side-by-side Git diff, schema diff, and regression detector.
+- [ ] **OpenTelemetry (OTLP) Collector Integration**: Native HTTP/gRPC ingestion endpoint conforming to standard OpenTelemetry span protobuf definitions.
+- [ ] **Embedded Analytical Storage Engine**: DuckDB / ClickHouse query adapter for querying historical trace repositories with millions of spans.
+- [ ] **Live Telemetry WebSocket Stream**: Real-time push stream for monitoring active distributed pipeline executions as spans emit.
+- [ ] **Trace Comparison Diff Engine**: Visual side-by-side execution diff tool to identify performance regressions between software releases.
 
 ---
 
-## Automated Tests
+## Contributing
 
-Run the full pytest suite:
-```bash
-pytest backend/tests -v
-```
-- `test_invariant_compiler.py`: DSL lexing, parsing, AST generation, syntax error handling.
-- `test_verification_engine.py`: Z3 UNSAT proofs, SAT counterexample extractions, UNKNOWN unsupported ops.
-- `test_api.py`: FastAPI end-to-end integration endpoints.
+Contributions are welcome! Please submit an issue to report bugs or submit a Pull Request following standard development conventions:
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/span-flamegraph`)
+3. Commit your Changes (`git commit -m 'feat: add span flamegraph component'`)
+4. Push to the Branch (`git push origin feature/span-flamegraph`)
+5. Open a Pull Request
 
 ---
 
 ## License
 
-MIT License.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for more details.
