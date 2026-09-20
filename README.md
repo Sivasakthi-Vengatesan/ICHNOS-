@@ -1,6 +1,6 @@
-# TraceLake-V
+# Ichnos
 
-> **Lightweight Telemetry Visualizer, Distributed Trace Inspector, and Execution Lineage Platform.**
+> **Distributed Trace & Execution Lineage Explorer.**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.0+-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
@@ -14,7 +14,7 @@
 
 ## The Problem
 
-Traditional linear log streams fail when debugging modern asynchronous data flows, distributed jobs, and multi-stage event pipelines—isolated log lines cannot convey causal dependencies, parent-child span hierarchy, or cumulative latency across service boundaries. TraceLake-V bridges this observability gap by transforming raw execution traces and transformation events into interactive dependency DAGs, waterfall timelines, and actionable bottleneck diagnostics.
+Traditional linear log streams fail when debugging modern asynchronous data flows, distributed jobs, and multi-stage event pipelines—isolated log lines cannot convey causal dependencies, parent-child span hierarchy, or cumulative latency across service boundaries. Ichnos bridges this observability gap by transforming raw execution traces and transformation events into interactive dependency DAGs, waterfall timelines, and actionable bottleneck diagnostics.
 
 ---
 
@@ -30,31 +30,30 @@ Traditional linear log streams fail when debugging modern asynchronous data flow
 
 ## Architecture & Data Flow
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                             TRACELAKE-V PIPELINE                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│   [ Data Sources / Jobs ]                                                   │
-│   (Kafka, Spark, Async Workers, REST APIs)                                  │
-│             │                                                               │
-│             ▼ (JSON Traces / OTLP Payloads)                                 │
-│   [ Telemetry Ingestion Layer ] (FastAPI / Static JSON Adapter)             │
-│             │                                                               │
-│             ▼ (Parsed Span Trees & DAG Relations)                           │
-│   [ TraceLake-V Core Engine ]                                               │
-│       ├── Trace Hierarchy Parser (Parent-Child Linking & Durations)         │
-│       ├── Lineage & Schema Resolver (Column-Level Dependency Map)           │
-│       └── Latency & Critical Path Analyzer                                  │
-│             │                                                               │
-│             ▼ (State-Driven Reactive Rendering)                             │
-│   [ Modern Developer UI ]                                                   │
-│       ├── Timeline / Waterfall View                                         │
-│       ├── Interactive Pipeline DAG Graph                                    │
-│       ├── Span Metadata & Counterexample Drawer                             │
-│       └── Time-Travel Version Comparison                                    │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart LR
+    A[Data Sources / Jobs<br/>Kafka • Spark • Async Workers • REST APIs]
+    B[Telemetry Ingestion Layer<br/>FastAPI / Static JSON Adapter]
+    C[Trace Hierarchy Parser<br/>Parent-Child Linking & Durations]
+    D[Lineage & Schema Resolver<br/>Column-Level Dependency Map]
+    E[Latency & Critical Path Analyzer]
+    F[Interactive Developer UI]
+    F1[Timeline / Waterfall]
+    F2[Execution DAG]
+    F3[Span Metadata Inspector]
+    F4[Time-Travel Comparison]
+
+    A -->|JSON Traces / OTLP| B
+    B --> C
+    B --> D
+    B --> E
+    C --> F
+    D --> F
+    E --> F
+    F --> F1
+    F --> F2
+    F --> F3
+    F --> F4
 ```
 
 ---
@@ -107,7 +106,7 @@ python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```bash
 docker compose up --build
 ```
-- **TraceLake-V Frontend**: `http://localhost:3000`
+- **Ichnos Frontend**: `http://localhost:3000`
 - **Backend API & Swagger Docs**: `http://localhost:8000/docs`
 
 ---
