@@ -3,7 +3,7 @@ from typing import Dict, Any, List
 class SparkAdapter:
     """
     Translates Apache Spark DataFrame execution plans (LogicalPlan / PhysicalPlan)
-    into TraceLake-V Transformation IR.
+    into Ichnos Transformation IR.
     """
 
     @classmethod

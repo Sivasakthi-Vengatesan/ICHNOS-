@@ -2,7 +2,7 @@
 
 ## 1. Syntax & Grammar
 
-The TraceLake-V Invariant DSL allows data engineers to declare formal properties about pipeline inputs and outputs in a human-readable mathematical notation.
+The Ichnos Invariant DSL allows data engineers to declare formal properties about pipeline inputs and outputs in a human-readable mathematical notation.
 
 ```text
 Assertion       ::= "ASSERT" RelationalExpr

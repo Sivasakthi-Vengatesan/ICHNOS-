@@ -53,7 +53,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
               DATA<br />UNDER<br />PROOF.
             </h1>
             <p className="text-base md:text-lg text-[#111111] font-medium max-w-xl leading-relaxed">
-              TraceLake-V computes mathematical proofs of data transformation invariants with Z3 SMT.
+              Ichnos computes mathematical proofs of data transformation invariants with Z3 SMT.
               Detect logic regressions, extract minimal counterexamples, and explore column lineage through time.
             </p>
           </div>

@@ -1,9 +1,9 @@
-# TraceLake-V Architecture Specification
+# Ichnos Architecture Specification
 
 ## 1. System Overview
 
-TraceLake-V is a developer instrument for verifying that data transformations preserve declared business invariants.
-Unlike traditional observability tools that only detect statistical anomalies or schema drifts post-execution, TraceLake-V formulates the transformation logic into First-Order Logic constraints and queries the **Z3 SMT Solver** to mathematically prove soundness or generate minimal concrete counterexamples.
+Ichnos is a developer instrument for verifying that data transformations preserve declared business invariants.
+Unlike traditional observability tools that only detect statistical anomalies or schema drifts post-execution, Ichnos formulates the transformation logic into First-Order Logic constraints and queries the **Z3 SMT Solver** to mathematically prove soundness or generate minimal concrete counterexamples.
 
 ```mermaid
 graph TD

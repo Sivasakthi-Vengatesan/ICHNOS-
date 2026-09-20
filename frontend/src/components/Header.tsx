@@ -15,13 +15,13 @@ export const Header: React.FC<HeaderProps> = ({ telemetry, onQuickVerify, isVeri
       <div className="flex items-center gap-4">
         <div className="w-10 h-10 bg-[#111111] flex items-center justify-center border-2 border-[#111111] shadow-bauhaus-sm">
           <div className="w-5 h-5 bg-[#DDE51A] flex items-center justify-center font-bold text-xs text-[#111111]">
-            V
+            I
           </div>
         </div>
         <div>
           <div className="flex items-baseline gap-2">
             <h1 className="text-2xl font-black tracking-tighter text-[#111111] leading-none">
-              TRACELAKE-V
+              ICHNOS
             </h1>
             <span className="text-[10px] uppercase font-bold tracking-widest bg-[#111111] text-[#DDE51A] px-1.5 py-0.5">
               LAB INSTRUMENT

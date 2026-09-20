@@ -15,7 +15,7 @@ from app.services.invariant_compiler import InvariantCompiler
 
 @click.group()
 def cli():
-    """TraceLake-V: SMT-Powered Data Lineage, Invariant Verification & Counterexample Engine."""
+    """Ichnos: SMT-Powered Data Lineage, Invariant Verification & Counterexample Engine."""
     pass
 
 @cli.command()
@@ -32,7 +32,7 @@ def verify(pipeline_file):
     schema = data.get("schema", {"id": "int", "amount": "float", "status": "string"})
 
     click.echo("\n========================================================")
-    click.echo(f" TraceLake-V // SMT Pipeline Verification Engine")
+    click.echo(f" Ichnos // SMT Pipeline Verification Engine")
     click.echo("========================================================")
     click.echo(f"Pipeline: {pipeline_name}")
     click.echo(f"Version:  {version}")
@@ -71,7 +71,7 @@ def verify(pipeline_file):
 @click.option("--version", default="v1", help="Pipeline version (v1, v2, v3)")
 def lineage(pipeline_id, version):
     """Display multi-level lineage graph for a pipeline."""
-    click.echo(f"\nTraceLake-V Lineage Graph for '{pipeline_id}' [{version}]:\n")
+    click.echo(f"\nIchnos Lineage Graph for '{pipeline_id}' [{version}]:\n")
     graph = LineageEngine.get_lineage_for_pipeline(
         pipeline_id=pipeline_id,
         pipeline_name=pipeline_id,
